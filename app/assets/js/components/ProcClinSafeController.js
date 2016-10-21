@@ -8,7 +8,7 @@ procClinFreeApp.controller('ProcClinFreeController', ['$scope', 'PageFactory', '
     function PhoneListController($scope, PageFactory, ClientFactory,DrugFactory) {
         $scope.instructions = "To add a new report, first choose a client and then click the next button";
         $scope.app_info = PageFactory;
-
+        $scope.paging = {studies:1};
         console.log(PageFactory.version());
 
         $scope.clients = ClientFactory.list();
@@ -18,7 +18,16 @@ procClinFreeApp.controller('ProcClinFreeController', ['$scope', 'PageFactory', '
             $scope.selectedClient.loadDrugs();
         };
 
+        $scope.handleDrugChanged = function(){
+            $scope.selectedClient.selectedDrug.loadStudies();
+        };
+
+        $scope.studiesPageChanged= function(){
+
+        };
+
         $scope.handleAddClient = function(){
             alert("Not implemented yet");
         };
+
 }]);

@@ -7,11 +7,13 @@ angular.module('clientFactory', ['drugFactory'])
             this.id = id;
             this.name = name;
             this.selectedDrug = null;
+            this.drugs = [];
+
             this.loadDrugs = function(){
                 if(this.id!= null && this.id.length>0){
                     this.drugs = DrugFactory.list(this.id);
                 }
-            }
+            };
 
             this.loadDrugs(id);
         }

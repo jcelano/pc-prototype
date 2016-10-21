@@ -1,12 +1,20 @@
 'use strict';
 
-angular.module('drugFactory', [])
-    .factory('DrugFactory', function() {
+angular.module('drugFactory', ['studyFactory'])
+    .factory('DrugFactory', ['StudyFactory', function(StudyFactory) {
 
         function Drug(id, name){
             this.id = id;
             this.name = name;
+            this.selectedStudy = null;
             this.studies = [];
+            this.loadStudies = function(){
+                if(this.id!= null && this.id.length>0){
+                    this.studies = StudyFactory.list(this.id);
+                }
+            };
+
+            this.loadStudies(id);
         }
 
         Drug.list = function (id) {
@@ -36,4 +44,4 @@ angular.module('drugFactory', [])
             return ret;
         };
         return Drug;
-});
+}]);
