@@ -16,9 +16,9 @@ procClinFreeApp.controller('ProcClinFreeController', ['$scope', 'PageFactory', '
 
         $scope.handleClientChanged = function(){
             $scope.selectedClient.loadDrugs();
-        }
+        };
 
         $scope.handleAddClient = function(){
             alert("Not implemented yet");
-        }
+        };
 }]);
