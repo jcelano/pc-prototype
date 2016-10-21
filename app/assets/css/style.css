@@ -11,7 +11,7 @@ body {
 strong { font-weight: 500; }
 
 a, a:hover, a:focus {
-	color: #f35b3f;
+	color: #286090;
 	text-decoration: none;
     -o-transition: all .3s; -moz-transition: all .3s; -webkit-transition: all .3s; -ms-transition: all .3s; transition: all .3s;
 }
@@ -40,47 +40,49 @@ h4 {
 
 img { max-width: 100%; }
 
-::-moz-selection { background: #f35b3f; color: #fff; text-shadow: none; }
-::selection { background: #f35b3f; color: #fff; text-shadow: none; }
+::-moz-selection { background: #286090; color: #fff; text-shadow: none; }
+::selection { background: #286090; color: #fff; text-shadow: none; }
 
 
 /***** Top menu *****/
-
-.navbar {
-	padding-top: 10px;
-	background: #333;
-	background: rgba(51, 51, 51, 0.3);
-	border: 0;
-	-o-transition: all .3s; -moz-transition: all .3s; -webkit-transition: all .3s; -ms-transition: all .3s; transition: all .3s;
+.nav.navbar-nav.navbar-right li a {
+	color: white;
 }
-.navbar.navbar-no-bg { background: none; }
+/*.navbar {*/
+	/*padding-top: 10px;*/
+	/*background: #333;*/
+	/*background: rgba(51, 51, 51, 0.3);*/
+	/*border: 0;*/
+	/*-o-transition: all .3s; -moz-transition: all .3s; -webkit-transition: all .3s; -ms-transition: all .3s; transition: all .3s;*/
+/*}*/
+/*.navbar.navbar-no-bg { background: none; }*/
 
-ul.navbar-nav {
-	font-size: 16px;
-	color: #fff;
-}
+/*ul.navbar-nav {*/
+	/*font-size: 16px;*/
+	/*color: #fff;*/
+/*}*/
 
-.navbar-inverse ul.navbar-nav li { padding-top: 8px; padding-bottom: 8px; }
+/*.navbar-inverse ul.navbar-nav li { padding-top: 8px; padding-bottom: 8px; }*/
 
-.navbar-inverse ul.navbar-nav li .li-text { opacity: 0.8; }
+/*.navbar-inverse ul.navbar-nav li .li-text { opacity: 0.8; }*/
 
-.navbar-inverse ul.navbar-nav li a { display: inline; padding: 0; color: #fff; }
-.navbar-inverse ul.navbar-nav li a:hover { color: #fff; opacity: 1; border-bottom: 1px dotted #fff; }
-.navbar-inverse ul.navbar-nav li a:focus { color: #fff; outline: 0; opacity: 1; border-bottom: 1px dotted #fff; }
+/*.navbar-inverse ul.navbar-nav li a { display: inline; padding: 0; color: #fff; }*/
+/*.navbar-inverse ul.navbar-nav li a:hover { color: #fff; opacity: 1; border-bottom: 1px dotted #fff; }*/
+/*.navbar-inverse ul.navbar-nav li a:focus { color: #fff; outline: 0; opacity: 1; border-bottom: 1px dotted #fff; }*/
 
-.navbar-inverse ul.navbar-nav li .li-social a {
-	margin: 0 5px;
-	font-size: 28px;
-	vertical-align: middle;
-}
-.navbar-inverse ul.navbar-nav li .li-social a:hover, 
-.navbar-inverse ul.navbar-nav li .li-social a:focus { border: 0; color: #f35b3f; }
+/*.navbar-inverse ul.navbar-nav li .li-social a {*/
+	/*margin: 0 5px;*/
+	/*font-size: 28px;*/
+	/*vertical-align: middle;*/
+/*}*/
+/*.navbar-inverse ul.navbar-nav li .li-social a:hover,*/
+/*.navbar-inverse ul.navbar-nav li .li-social a:focus { border: 0; color: #286090; }*/
 
-.navbar-brand {
-	width: 162px;
-	background: url(../img/logo.png) left center no-repeat;
-	text-indent: -99999px;
-}
+/*.navbar-brand {*/
+	/*width: 162px;*/
+	/*background: url(../img/logo.png) left center no-repeat;*/
+	/*text-indent: -99999px;*/
+/*}*/
 
 
 /***** Top content *****/
@@ -92,7 +94,7 @@ ul.navbar-nav {
 .top-content .description { margin: 20px 0 10px 0; }
 .top-content .description p { opacity: 0.8; }
 .top-content .description a { color: #fff; }
-.top-content .description a:hover, 
+.top-content .description a:hover,
 .top-content .description a:focus { border-bottom: 1px dotted #fff; }
 
 .form-box { padding-top: 40px; }
@@ -106,9 +108,9 @@ ul.navbar-nav {
 .f1-steps { overflow: hidden; position: relative; margin-top: 20px; }
 
 .f1-progress { position: absolute; top: 24px; left: 0; width: 100%; height: 1px; background: #ddd; }
-.f1-progress-line { position: absolute; top: 0; left: 0; height: 1px; background: #f35b3f; }
+.f1-progress-line { position: absolute; top: 0; left: 0; height: 1px; background: #286090; }
 
-.f1-step { position: relative; float: left; width: 33.333333%; padding: 0 5px; }
+.f1-step { position: relative; float: left; width: 20%; padding: 0 5px; }
 
 .f1-step-icon {
 	display: inline-block; width: 40px; height: 40px; margin-top: 4px; background: #ddd;
@@ -116,21 +118,21 @@ ul.navbar-nav {
 	-moz-border-radius: 50%; -webkit-border-radius: 50%; border-radius: 50%;
 }
 .f1-step.activated .f1-step-icon {
-	background: #fff; border: 1px solid #f35b3f; color: #f35b3f; line-height: 38px;
+	background: #fff; border: 1px solid #286090; color: #286090; line-height: 38px;
 }
 .f1-step.active .f1-step-icon {
-	width: 48px; height: 48px; margin-top: 0; background: #f35b3f; font-size: 22px; line-height: 48px;
+	width: 48px; height: 48px; margin-top: 0; background: #286090; font-size: 22px; line-height: 48px;
 }
 
 .f1-step p { color: #ccc; }
-.f1-step.activated p { color: #f35b3f; }
-.f1-step.active p { color: #f35b3f; }
+.f1-step.activated p { color: #286090; }
+.f1-step.active p { color: #286090; }
 
 .f1 fieldset { display: none; text-align: left; }
 
 .f1-buttons { text-align: right; }
 
-.f1 .input-error { border-color: #f35b3f; }
+.f1 .input-error { border-color: #286090; }
 
 
 
@@ -142,11 +144,11 @@ ul.navbar-nav {
 
 @media (max-width: 767px) {
 	
-	.navbar { padding-top: 0; }
-	.navbar.navbar-no-bg { background: #333; background: rgba(51, 51, 51, 0.9); }
-	.navbar-brand { height: 60px; margin-left: 15px; }
-	.navbar-collapse { border: 0; }
-	.navbar-toggle { margin-top: 12px; }
+	/*.navbar { padding-top: 0; }*/
+	/*.navbar.navbar-no-bg { background: #333; background: rgba(51, 51, 51, 0.9); }*/
+	/*.navbar-brand { height: 60px; margin-left: 15px; }*/
+	/*.navbar-collapse { border: 0; }*/
+	/*.navbar-toggle { margin-top: 12px; }*/
 	
 	.top-content { padding: 40px 0 110px 0; }
 
@@ -173,8 +175,10 @@ only screen and (                min-resolution: 192dpi),
 only screen and (                min-resolution: 2dppx) {
 	
 	/* logo */
-    .navbar-brand {
-    	background-image: url(../img/logo@2x.png) !important; background-repeat: no-repeat !important; background-size: 162px 36px !important;
-    }
+    /*.navbar-brand {*/
+    	/*background-image: url(../img/logo@2x.png) !important; background-repeat: no-repeat !important; background-size: 162px 36px !important;*/
+    /*}*/
 	
 }
+
+

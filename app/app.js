@@ -2,12 +2,23 @@
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
-var os = _interopDefault(require('os'));
-var electron = require('electron');
-var jetpack = _interopDefault(require('fs-jetpack'));
+
+var fs = _interopDefault(nodeRequire('fs'));
+var os = _interopDefault(nodeRequire('os'));
+var electron = nodeRequire('electron');
+var jetpack = _interopDefault(nodeRequire('fs-jetpack'));
 
 var greet = function () {
     return 'Hello World!';
+};
+
+
+var showFiles = function(){
+    var path = '/tmp';
+    return jetpack.listAsync(path).then(function(files){
+        console.log(files);
+        return files;
+    });
 };
 
 // Simple wrapper exposing environment variables to rest of the code.
@@ -28,14 +39,16 @@ console.log('Loaded environment variables:', env);
 var app = electron.remote.app;
 var appDir = jetpack.cwd(app.getAppPath());
 
+
 // Holy crap! This is browser window with HTML and stuff, but I can read
 // here files like it is node.js! Welcome to Electron world :)
 console.log('The author of this app is:', appDir.read('package.json', 'json').author);
 
 document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('greet').innerHTML = greet();
-    document.getElementById('platform-info').innerHTML = os.platform();
-    document.getElementById('env-name').innerHTML = env.name;
+    //document.getElementById('greet').innerHTML = greet();
+    //document.getElementById('platform-info').innerHTML = os.platform();
+    //document.getElementById('env-name').innerHTML = env.name;
+    showFiles();
 });
 }());
 //# sourceMappingURL=app.js.map
