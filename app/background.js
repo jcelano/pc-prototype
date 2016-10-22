@@ -1,7 +1,6 @@
 (function () {'use strict';
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
 var electron = require('electron');
 var jetpack = _interopDefault(require('fs-jetpack'));
 
@@ -155,11 +154,11 @@ electron.app.on('ready', function () {
 
     var mainWindow = createWindow('main', {
         width: 1000,
-        height: 600
+        height: 600,
+        frame:true,
     });
 
     mainWindow.loadURL('file://' + __dirname + '/app.html');
-
     if (env.name === 'development') {
         mainWindow.openDevTools();
     }

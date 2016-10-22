@@ -6,22 +6,22 @@ angular.module('clientFactory', ['drugFactory'])
         function Client(id, name){
             this.id = id;
             this.name = name;
-            this.selectedDrug = null;
-            this.drugs = [];
-
-            this.loadDrugs = function(){
-                if(this.id!= null && this.id.length>0){
-                    this.drugs = DrugFactory.list(this.id);
-                }
-            };
-
-            this.loadDrugs(id);
+            this.drug = null;
         }
 
         Client.list = function () {
             var ret = [];
-            for(var i=0;i<10;++i){
-                ret.push(new Client("cl" + i, "Client " + i))
+
+            var temp = [
+                'Acute Lamp Builders',
+                'Cheeky Fox Films',
+                'Small Apple Films',
+                'Jealous Tiger Web Design',
+                'Happy Crab Marketing'
+            ];
+
+            for(var i=0;i<temp.length;++i){
+                ret.push(new Client("CLI" + i, temp[i]))
             }
 
             return ret;

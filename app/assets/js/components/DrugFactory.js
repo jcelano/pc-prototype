@@ -6,20 +6,12 @@ angular.module('drugFactory', ['studyFactory'])
         function Drug(id, name){
             this.id = id;
             this.name = name;
-            this.selectedStudy = null;
-            this.studies = [];
-            this.loadStudies = function(){
-                if(this.id!= null && this.id.length>0){
-                    this.studies = StudyFactory.list(this.id);
-                }
-            };
-
-            this.loadStudies(id);
+            this.study = null;
         }
 
-        Drug.list = function (id) {
+        Drug.list = function (clientId) {
 
-            if(id == null || id.length == 0){
+            if(clientId == null || clientId.length == 0){
                 return [];
             }
 

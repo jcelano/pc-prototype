@@ -9,9 +9,9 @@ angular.module('studyFactory', [])
             this.deliverables = [];
         }
 
-        Study.list = function (id) {
+        Study.list = function (clientId, drugId) {
 
-            if(id == null || id.length == 0){
+            if(drugId == null || drugId.length == 0){
                 return [];
             }
 

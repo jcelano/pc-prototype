@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="procClinFreeApp">
+<html lang="en" ng-app="procClinSafeApp">
 
     <head>
 
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{{PageFactory.title()}}</title>
-
+        <title></title>
+<!-- {{PageFactory.title()}} -->
         <!-- CSS -->
         <link rel="stylesheet" href="bower_components/roboto-fontface/css/roboto/roboto-fontface.css">
         <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="assets/css/style.css">
 
         <script>
-            if(window.process && windo.process.type){
+            if(window.process != null && window.process.type != null){
                 window.nodeRequire = require;
                 delete window.require;
                 delete window.exports;
@@ -35,206 +35,59 @@
 
     </head>
 
-    <body ng-controller="ProcClinFreeController" background="assets/img/backgrounds/1.jpg">
+    <body ng-controller="mainController" background="assets/img/backgrounds/1.jpg">
 
-    <div class="navbar navbar-fixed-top navbar-transparent" role="navigation">
-        <div class="container-fluid">
+        <div class="navbar navbar-fixed-top navbar-transparent" role="navigation">
+            <div class="container-fluid">
 
-            <div class="navbar-collapse collapse" id="navbar-footer">
+                <div class="navbar-collapse collapse" id="navbar-footer">
 
 
-                <ul class="nav navbar-nav navbar-left">
-                    <a class="navbar-brand" href="#"><img src="assets/img/logo.png"/>{{app_info.version()}}</a>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
+                    <ul class="nav navbar-nav navbar-left">
+                        <a class="navbar-brand" href="#"><img src="assets/img/logo.png"/>{{app_info.version}}</a>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
 
-                    <button type="button" class="btn btn-primary navbar-btn"><span class="fa fa-file-text-o"></span> Status</button>
-                    <button type="button" class="btn btn-primary navbar-btn"><span class="glyphicon glyphicon-plus"></span> New Report</button>
-                    <button type="button" class="btn btn-primary navbar-btn"><span class="glyphicon glyphicon-wrench"></span> Settings</button>
-                    <button type="button" class="btn btn-primary navbar-btn"><span class="glyphicon glyphicon-envelope"></span> Email Support</button>
-                </ul>
+                        <a type="button" class="btn btn-primary navbar-btn" href="#status"><span class="fa fa-file-text-o"></span> Status</a>
+                        <a type="button" class="btn btn-primary navbar-btn" href="#wizard"><span class="glyphicon glyphicon-plus"></span> New Report</a>
+                        <a type="button" class="btn btn-primary navbar-btn" href="#settings"><span class="glyphicon glyphicon-wrench"></span> Settings</a>
+                        <a type="button" class="btn btn-primary navbar-btn" href="mailto:support@pci.com"><span class="glyphicon glyphicon-envelope"></span> Email Support</a>
+                    </ul>
 
-            </div><!--/.nav-collapse -->
+                </div><!--/.nav-collapse -->
 
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-footer">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-footer">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+
             </div>
-
         </div>
-    </div>
 
-		<!-- Top menu -->
-        <!--<nav class="navbar navbar-transparent ">-->
-            <!--<div class="container-fluid">-->
-                <!--<div class="navbar-header">-->
-                    <!--<a class="navbar-brand" href="#"><img src="assets/img/logo.png"/></a>-->
-                <!--</div>-->
-                <!--<ul class="nav navbar-nav">-->
-                    <!--<li class="active"><a href="#">Home</a></li>-->
-                    <!--<li><a href="#">New Report</a></li>-->
-
-                    <!--<li><button class="btn">Settings</button></li>-->
-                <!--</ul>-->
-                <!--<ul class="nav navbar-nav navbar-right">-->
-                    <!--<li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>-->
-                    <!--<li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>-->
-                <!--</ul>-->
-            <!--</div>-->
-        <!--</nav>-->
-
-        <!-- Top content -->
         <div class="top-content">
+
             <div class="container">
-                <!--<div class="row">-->
-                    <!--<div class="col-sm-8 col-sm-offset-2 text">-->
-                        <!--<div class="description">-->
-                       	    <!--<p>{{instructions}}</p>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
-                
                 <div class="row">
                     <div class="col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1 form-box">
-                    	<form role="form" action="" method="post" class="f1">
-                    		<div class="f1-steps">
-                    			<div class="f1-progress">
-                    			    <div class="f1-progress-line" data-now-value="10" data-number-of-steps="5" style="width: 10%;"></div>
-                    			</div>
-                    			<div class="f1-step active">
-                    				<div class="f1-step-icon"><i class="fa fa-user"></i></div>
-                    				<p>Client</p>
-                    			</div>
-                    			<div class="f1-step">
-                    				<div class="f1-step-icon"><i class="fa fa-medkit"></i></div>
-                    				<p>Drug</p>
-                    			</div>
-                    		    <div class="f1-step">
-                    				<div class="f1-step-icon"><i class="fa fa-stethoscope"></i></div>
-                    				<p>Studies</p>
-                    			</div>
-                                <div class="f1-step">
-                                    <div class="f1-step-icon"><i class="fa fa-calendar"></i></div>
-                                    <p>Deliverables</p>
-                                </div>
-                                <div class="f1-step">
-                                    <div class="f1-step-icon"><i class="fa fa-file-text-o"></i></div>
-                                    <p>Reports</p>
-                                </div>
-                    		</div>
-
-
-                    		<fieldset>
-                                <div class="form-group">
-                                    <label for="client">Select a client:</label>
-                                    <select class="form-control" id="client" ng-options="client.name for client in clients" ng-model="selectedClient" ng-change="handleClientChanged()">
-                                    </select>
-                                </div>
-
-                                <div class="f1-buttons">
-                                    <button type="button" class="btn btn-default btn-add-client" ng-click="handleAddClient()">Add New Client</button>
-                                    <button type="button" class="btn btn-primary btn-next" ng-disabled="selectedClient.id == null">Next</button>
-                                </div>
-                            </fieldset>
-
-                            <fieldset>
-                                <div class="form-group">
-                                    <label for="drugs">Select a drug:</label>
-                                    <select class="form-control" id="drugs" ng-options="drug.name for drug in selectedClient.drugs" ng-change="handleDrugChanged()" ng-model="selectedClient.selectedDrug">
-                                    </select>
-                                </div>
-
-                                <div class="f1-buttons">
-                                    <button type="button" class="btn btn-default btn-add-drug">Add New Drug</button>
-                                    <button type="button" class="btn btn-default btn-previous">Previous</button>
-                                    <button type="button" class="btn btn-primary btn-next" ng-disabled="selectedClient.selectedDrug == null">Next</button>
-                                </div>
-
-                            </fieldset>
-
-                            <fieldset>
-                                <h4>Select one or more studies:</h4>
-                                <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                                    <thead>
-                                    <tr>
-                                        <th><input type="checkbox" value=""></th>
-                                        <th>Name</th>
-                                        <th>Description</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr ng-repeat="study in selectedClient.selectedDrug.studies">
-                                        <td><input type="checkbox" ng-value="study.id"></td>
-                                        <td>{{study.name}}</td>
-                                        <td>{{study.description}}</td>
-
-                                    </tr>
-                                    <!--<tr>-->
-                                        <!--<td><input type="checkbox" value=""></td>-->
-                                        <!--<td>Study 1</td>-->
-                                        <!--<td>the quick brown fox jumps over the lazy dog</td>-->
-                                    <!--</tr>-->
-                                    <!--<tr>-->
-                                        <!--<td><input type="checkbox" value=""></td>-->
-                                        <!--<td>Study 2</td>-->
-                                        <!--<td>the slow white frog hopped over the hungry cat</td>-->
-                                    <!--</tr>-->
-                                    </tbody>
-                                </table>
-                                <ul uib-pagination total-items="selectedClient.selectedDrug.studies.length" ng-model="paging.studies" ng-change="studiesPageChanged()"></ul>
-
-                                <div class="f1-buttons">
-                                    <button type="button" class="btn btn-default btn-add-drug">Add New Study</button>
-                                    <button type="button" class="btn btn-default btn-previous">Previous</button>
-                                    <button type="button" class="btn btn-primary btn-next" ng-disabled="selectedClient.selectedDrug == null">Next</button>
-                                </div>
-
-                            </fieldset>
-
-                            <fieldset>
-                                <h4>Select one or more deliverables and set there dates:</h4>
-
-                                <div layout-gt-xs="row">
-                                    <div flex-gt-xs="">
-                                        <h4>Standard date-picker</h4>
-                                        <md-datepicker ng-model="myDate" md-placeholder="Enter date"></md-datepicker>
-                                    </div>
-                                </div>
-
-                                <div class="f1-buttons">
-                                    <button type="button" class="btn btn-default btn-add-drug">Add New Deliverable</button>
-                                    <button type="button" class="btn btn-default btn-previous">Previous</button>
-                                    <button type="button" class="btn btn-primary btn-next" ng-disabled="selectedClient.selectedDrug == null">Next</button>
-                                </div>
-                            </fieldset>
-
-                            <fieldset>
-                                <h4>Run the report</h4>
-                                You will be running a report for client1 for drug 2 for study 3, the report settings are below:
-
-                                <div class="f1-buttons">
-                                    <button type="button" class="btn btn-default btn-previous">Previous</button>
-                                    <button type="button" class="btn btn-primary btn-submit" ng-disabled="selectedClient.selectedDrug == null">Run Report</button>
-                                </div>
-                            </fieldset>
-                    	
-                    	</form>
+                        <div ng-view></div>
                     </div>
                 </div>
-                    
             </div>
+
         </div>
 
-        <pre ng-show="true">
-            {{selectedClient  | json}}
+        <div>
 
+            {{test_msg}}
 
-        </pre>
+        <button ng-click="showOpen()">Open</button>
+            <button ng-click="testSave()">TEst</button>
 
+        </div>
         <!-- Javascript -->
         <script src="bower_components/jquery/dist/jquery.min.js"></script>
 
@@ -252,11 +105,18 @@
         <script src="assets/js/scripts.js"></script>
 
         <script src="assets/js/app.js"></script>
-        <script src="assets/js/components/ProcClinSafeController.js"></script>
+        <script src="assets/js/components/controllers/MainController.js"></script>
+        <script src="assets/js/components/controllers/ProcClinSafeController.js"></script>
+        <script src="assets/js/components/controllers/SettingsController.js"></script>
+        <script src="assets/js/components/controllers/StatusController.js"></script>
         <script src="assets/js/components/PageFactory.js"></script>
         <script src="assets/js/components/ClientFactory.js"></script>
         <script src="assets/js/components/DrugFactory.js"></script>
         <script src="assets/js/components/StudyFactory.js"></script>
+        <script src="assets/js/components/DeliverableFactory.js"></script>
+        <script src="assets/js/components/FileService.js"></script>
+
+        <script src="assets/js/helpers/FileHelper.js"></script>
 
     </body>
 
