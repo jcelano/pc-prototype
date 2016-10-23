@@ -1,15 +1,19 @@
-function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
-var electron = nodeRequire('electron');
-var jetpack = _interopDefault(nodeRequire('fs-jetpack'));
-
-const electronApp = electron.remote;
-var dialog = electronApp.dialog;
-var fs = nodeRequire('fs');
 
 var pcs = angular.module('procClinSafeApp');
+
 pcs.service('FileService', function() {
 
+    function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
+
+    const electron = nodeRequire('electron');
+    const jetpack = _interopDefault(nodeRequire('fs-jetpack'));
+
+    const app = electron.remote;
+    const dialog = app.dialog;
+    const path = nodeRequire('path');
+    const fs = nodeRequire('fs');
+    const CLIENTS_FILE = "clients.json";
+    const userDataDir = jetpack.cwd(app.app.getPath('userData'));
     // service is just a constructor function
     // that will be called with 'new'
 
@@ -18,18 +22,30 @@ pcs.service('FileService', function() {
     };
 
     this.showOpen = showOpen;
+
+    this.saveClients = function(clients){
+        var fileName = userDataDir.path() + path.sep + CLIENTS_FILE;
+        this.saveJSON(fileName, clients)
+    };
+
+    this.loadClients = function(){
+        var fileName = userDataDir.path() + path.sep + CLIENTS_FILE;
+        return readJson(fileName);
+    };
+
     this.saveJSON = function(fileName, obj){
         saveChanges(fileName, JSON.stringify(obj));
-    }
+    };
 
     this.loadSettings = function(){
 
-        var userDataDir = jetpack.cwd(electronApp.getPath('userData'));
-        var fileName = userDataDir + "settings.json";
-
+        var userDataDir = jetpack.cwd(app.app.getPath('userData'));
+        var fileName = userDataDir.path() + path.sep + "settings.json";
 
         return fileName;
-    }
+    };
+
+
 
     function showOpen(){
         dialog.showOpenDialog(function (fileNames) {
@@ -58,13 +74,28 @@ pcs.service('FileService', function() {
                     alert("An error ocurred creating the file "+ err.message)
                 }
 
-                alert("The file has been succesfully saved");
+                alert("The file has been succesfully saved ");
             });
         });
     }
 
+    function readJsonAsync(filepath) {
+        return jetpack.readAsync(filepath, 'json').then(function (data) {
+            // if(err){
+            //     alert("An error ocurred reading the file :" + err.message);
+            //     return;
+            // }
+
+            return data;
+        });
+    }
+
+    function readJson(filepath) {
+        return jetpack.read(filepath, 'json');
+    }
+
     function readFile(filepath) {
-        fs.readFile(filepath, 'utf-8', function (err, data) {
+        return fs.readFile(filepath, 'utf-8', function (err, data) {
             if(err){
                 alert("An error ocurred reading the file :" + err.message);
                 return;
@@ -99,7 +130,7 @@ pcs.service('FileService', function() {
                 return;
             }
 
-            alert("The file has been succesfully saved");
+            alert("The file has been succesfully saved to " + filepath);
         });
     }
 });

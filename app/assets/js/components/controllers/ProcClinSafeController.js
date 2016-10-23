@@ -4,8 +4,8 @@
 var pscApp = angular.module('procClinSafeApp');
 
 // Define the `PhoneListController` controller on the `phonecatApp` module
-pscApp.controller('procClinFreeController', ['$scope', 'PageFactory', 'ClientFactory', 'DrugFactory', 'StudyFactory', 'DeliverableFactory',
-    function PhoneListController($scope, PageFactory, ClientFactory,DrugFactory, StudyFactory,DeliverableFactory) {
+pscApp.controller('procClinFreeController', ['$document','$scope', '$uibModal', 'PageFactory', 'ClientFactory', 'DrugFactory', 'StudyFactory', 'DeliverableFactory',
+    function PhoneListController($document, $scope, $uibModal, PageFactory, ClientFactory,DrugFactory, StudyFactory,DeliverableFactory) {
         $scope.instructions = "To add a new report, first choose a client and then click the next button";
         $scope.app_info = {version: PageFactory.version(), title:PageFactory.title()};
         $scope.paging = {studies:{currentPage:1, itemsPerPage:5},deliverables:{currentPage:1, itemsPerPage:4}};
@@ -15,7 +15,16 @@ pscApp.controller('procClinFreeController', ['$scope', 'PageFactory', 'ClientFac
         $scope.client = new ClientFactory();
 
         //these hold all the lists
+        $scope.loadData = function(){
+            //  ClientFactory.list().then(function(clients){
+            //     $scope.clients = clients;
+            // });
+        };
+
         $scope.clients = ClientFactory.list();
+
+
+
         $scope.drugs = [];
         $scope.studies = [];
         $scope.deliverables = [];
@@ -37,8 +46,16 @@ pscApp.controller('procClinFreeController', ['$scope', 'PageFactory', 'ClientFac
         };
 
         $scope.handleAddClient = function(){
-            alert("Not implemented yet");
+            var parentElem = angular.element($document[0].querySelector('.foobar'));
+
+            $uibModal.open({
+                parentElem:parentElem,
+                animation: true,
+                templateUrl: 'pages/add_client.html',
+                controller: 'ClientCrudController'
+            });
         };
+
 
         $scope.incrementStep = function(v){
             $scope.step = $scope.step + v;

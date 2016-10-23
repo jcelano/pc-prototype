@@ -183,19 +183,6 @@ only screen and (                min-resolution: 2dppx) {
 	
 }
 
-.fade.ng-leave {
-	animation: my_fade_animation 0.5s linear;
-	-webkit-animation: my_fade_animation 0.5s linear;
-}
 
-@keyframes my_fade_animation {
-	from { opacity:1; }
-	to { opacity:0; }
-}
-
-@-webkit-keyframes my_fade_animation {
-	from { opacity:1; }
-	to { opacity:0; }
-}
 
 

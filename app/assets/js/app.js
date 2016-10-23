@@ -2,7 +2,6 @@
 
 //var procClinFreeApp = angular.module('procClinFreeApp', ['pageFactory', 'clientFactory', 'drugFactory']);
 var pcsApp = angular.module('procClinSafeApp', ['ngRoute','ui.bootstrap','ngMaterial', 'material.svgAssetsCache',
-
     'pageFactory', 'clientFactory', 'drugFactory','studyFactory', 'deliverableFactory']);
 
 
