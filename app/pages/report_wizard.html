@@ -32,11 +32,11 @@
     <div class="row" ng-show="step == 1" class="fade">
         <div class="col-sm-3 col-md-3 col-lg-3 text-right">Select a client:</div>
         <div class="col-sm-6 col-md-6 col-lg-6 ">
-            <select class="form-control" id="client" ng-options="client.name for client in clients" ng-model="client" ng-change="handleClientChanged()">
+            <select class="form-control" id="client" ng-options="client.name for client in clients | orderBy:'name'" ng-model="client" ng-change="handleClientChanged()">
             </select>
 
         </div>
-        <div class="col-sm-3 col-md-3 col-lg-3 "><button type="button" class="btn btn-default btn-add-client" ng-click="handleAddClient()">Add New Client</button></div>
+        <div class="col-sm-3 col-md-3 col-lg-3 "><button type="button" class="btn btn-default btn-add-client" ng-click="handleAddClient()">{{client.id == null?"Add New":"Edit"}} Client</button></div>
     </div>
 
 
@@ -117,7 +117,7 @@
 </form>
 
 <pre ng-show="true">
-{{client | json}}
+{{clients | json}}
 </pre>
 
 <script type="text/ng-template" id="add_client.html">

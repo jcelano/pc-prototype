@@ -1,27 +1,15 @@
 'use strict';
-//'pageFactory'
-// Define the `phonecatApp` module
-var pscApp = angular.module('procClinSafeApp');
-
-// Define the `PhoneListController` controller on the `phonecatApp` module
-pscApp.controller('procClinFreeController', ['$document','$scope', '$uibModal', 'PageFactory', 'ClientFactory', 'DrugFactory', 'StudyFactory', 'DeliverableFactory',
-    function PhoneListController($document, $scope, $uibModal, PageFactory, ClientFactory,DrugFactory, StudyFactory,DeliverableFactory) {
+angular.module('procClinSafeApp').controller('reportWizardController', ['$scope', '$uibModal', 'PageFactory', 'ClientService', 'DrugFactory', 'StudyFactory', 'DeliverableFactory',
+    function ReportWizardController($scope, $uibModal, PageFactory, ClientService,DrugFactory, StudyFactory,DeliverableFactory) {
         $scope.instructions = "To add a new report, first choose a client and then click the next button";
         $scope.app_info = {version: PageFactory.version(), title:PageFactory.title()};
         $scope.paging = {studies:{currentPage:1, itemsPerPage:5},deliverables:{currentPage:1, itemsPerPage:4}};
         $scope.step = 1;
         $scope.numberOfSteps = 5;
         $scope.progressBarPct = 10;
-        $scope.client = new ClientFactory();
+        $scope.client = ClientService.newInstance();
 
-        //these hold all the lists
-        $scope.loadData = function(){
-            //  ClientFactory.list().then(function(clients){
-            //     $scope.clients = clients;
-            // });
-        };
-
-        $scope.clients = ClientFactory.list();
+        $scope.clients = ClientService.list();
 
 
 
@@ -46,13 +34,19 @@ pscApp.controller('procClinFreeController', ['$document','$scope', '$uibModal', 
         };
 
         $scope.handleAddClient = function(){
-            var parentElem = angular.element($document[0].querySelector('.foobar'));
+            //var parentElem = angular.element($document[0].querySelector('.foobar'));
 
             $uibModal.open({
-                parentElem:parentElem,
+                //parentElem:parentElem,
                 animation: true,
                 templateUrl: 'pages/add_client.html',
-                controller: 'ClientCrudController'
+                controller: 'ClientCrudController',
+                resolve: {
+                    client: $scope.client
+                }
+            }).result.then(function(data){
+                console.log(data);
+                $scope.client = data;
             });
         };
 

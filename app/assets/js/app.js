@@ -2,7 +2,7 @@
 
 //var procClinFreeApp = angular.module('procClinFreeApp', ['pageFactory', 'clientFactory', 'drugFactory']);
 var pcsApp = angular.module('procClinSafeApp', ['ngRoute','ui.bootstrap','ngMaterial', 'material.svgAssetsCache',
-    'pageFactory', 'clientFactory', 'drugFactory','studyFactory', 'deliverableFactory']);
+    'pageFactory', 'clientService', 'drugFactory','studyFactory', 'deliverableFactory']);
 
 
 pcsApp.config(function($routeProvider) {
@@ -11,12 +11,12 @@ pcsApp.config(function($routeProvider) {
     // route for the home page
     .when('/', {
         templateUrl : 'pages/report_wizard.html',
-        controller  : 'procClinFreeController'
+        controller  : 'reportWizardController'
     })
 
     .when('/wizard', {
         templateUrl : 'pages/report_wizard.html',
-        controller  : 'procClinFreeController'
+        controller  : 'reportWizardController'
     })
     // route for the about page
     .when('/settings', {
