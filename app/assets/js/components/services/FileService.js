@@ -12,7 +12,8 @@ pcs.service('FileService', function() {
     const dialog = app.dialog;
     const path = nodeRequire('path');
     const fs = nodeRequire('fs');
-    const CLIENTS_FILE = "clients.json";
+    const DATA_DIR = "data";
+    const CLIENTS_FILE = DATA_DIR + path.sep + "clients.json";
     const userDataDir = jetpack.cwd(app.app.getPath('userData'));
     // service is just a constructor function
     // that will be called with 'new'
@@ -30,7 +31,11 @@ pcs.service('FileService', function() {
 
     this.loadClients = function(){
         var fileName = userDataDir.path() + path.sep + CLIENTS_FILE;
-        return readJson(fileName);
+        var clients =  readJson(fileName);
+        if(clients === undefined){
+            clients = [];
+        }
+        return clients;
     };
 
     this.saveJSON = function(fileName, obj){
@@ -74,7 +79,7 @@ pcs.service('FileService', function() {
                     alert("An error ocurred creating the file "+ err.message)
                 }
 
-                alert("The file has been succesfully saved ");
+                console.log("The file has been succesfully saved ");
             });
         });
     }
@@ -123,14 +128,7 @@ pcs.service('FileService', function() {
     }
 
     function saveChanges(filepath,content){
-        fs.writeFile(filepath, content, function (err) {
-            if(err){
-                alert("An error ocurred updating the file"+ err.message);
-                console.log(err);
-                return;
-            }
-
-            alert("The file has been succesfully saved to " + filepath);
-        });
+        console.log("Saving " + filepath);
+        jetpack.write(filepath, content);
     }
 });

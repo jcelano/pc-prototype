@@ -9,19 +9,19 @@
             <div class="f1-step-icon"><i class="fa fa-user"></i></div>
             <p>Client</p>
         </div>
-        <div class="f1-step">
+        <div class="f1-step" ng-class="step>1?'active':''">
             <div class="f1-step-icon"><i class="fa fa-medkit"></i></div>
             <p>Drug</p>
         </div>
-        <div class="f1-step">
+        <div class="f1-step" ng-class="step>2?'active':''">
             <div class="f1-step-icon"><i class="fa fa-stethoscope"></i></div>
             <p>Studies</p>
         </div>
-        <div class="f1-step">
+        <div class="f1-step" ng-class="step>3?'active':''">
             <div class="f1-step-icon"><i class="fa fa-calendar"></i></div>
             <p>Deliverables</p>
         </div>
-        <div class="f1-step">
+        <div class="f1-step" ng-class="step>4?'active':''">
             <div class="f1-step-icon"><i class="fa fa-file-text-o"></i></div>
             <p>Reports</p>
         </div>
@@ -30,49 +30,48 @@
 
 
     <div class="row" ng-show="step == 1" class="fade">
-        <div class="col-sm-3 col-md-3 col-lg-3 text-right">Select a client:</div>
+        <h4>Select a client</h4>
+        <div class="col-sm-1 col-md-1 col-lg-1 text-right"></div>
         <div class="col-sm-6 col-md-6 col-lg-6 ">
-            <select class="form-control" id="client" ng-options="client.name for client in clients | orderBy:'name'" ng-model="client" ng-change="handleClientChanged()">
+            <select class="form-control" id="client" ng-options="client.name for client in clients | orderBy:'name'" ng-model="report.client" ng-change="handleClientChanged()">
             </select>
 
         </div>
-        <div class="col-sm-3 col-md-3 col-lg-3 "><button type="button" class="btn btn-default btn-add-client" ng-click="handleAddClient()">{{client.id == null?"Add New":"Edit"}} Client</button></div>
+        <div class=" btn-group">
+            <button type="button" class="btn btn-default btn-sm btn-add-client" ng-click="handleEditClient(true)">Add Client</button>
+            <button type="button" ng-show="report.client.id != null" class="btn btn-default btn-sm btn-add-client" ng-click="handleEditClient()">Edit Client</button>
+        </div>
     </div>
 
 
     <div class="row" ng-show="step == 2" class="fade">
-        <div class="col-sm-3 col-md-3 col-lg-3 text-right">Select a drug:</div>
+        <h4>Select a drug for {{report.client.name}}</h4>
+        <div class="col-sm-3 col-md-3 col-lg-3 text-right"></div>
         <div class="col-sm-6 col-md-6 col-lg-6 ">
-            <select class="form-control" id="drugs" ng-options="drug.name for drug in drugs" ng-change="handleDrugChanged()" ng-model="client.drug">
+            <select class="form-control" id="drugs" ng-options="drug.name for drug in report.client.drugs"
+                    ng-model="report.drug">
             </select>
 
         </div>
         <div class="col-sm-3 col-md-3 col-lg-3 ">
-            <button type="button" class="btn btn-default btn-add-drug">Add New Drug</button>
+            <button type="button" class="btn btn-default btn-add-drug" ng-click="handleEditDrug(true)">Add New Drug</button>
+            <button type="button" ng-show="report.drug.id != null" class="btn btn-default btn-sm btn-add-client" ng-click="handleEditClient()">Edit Drug</button>
         </div>
     </div>
 
     <div class="row" ng-show="step == 3">
-        <h4>Select one or more studies:</h4>
-        <button type="button" class="btn btn-default btn-add-drug">Add New Study</button>
-        <table class="table table-striped table-bordered" cellspacing="0" width="100%">
-            <thead>
-            <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Description</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="study in studies.slice(((paging.studies.currentPage-1)*paging.studies.itemsPerPage), ((paging.studies.currentPage)*paging.studies.itemsPerPage))">
-                <td><input type="radio" ng-change="handleStudyChange()" ng-model="client.drug.study" ng-value="study"></td>
-                <td>{{study.name}}</td>
-                <td>{{study.description}}</td>
-
-            </tr>
-            </tbody>
-        </table>
-        <ul uib-pagination items-per-page="paging.studies.itemsPerPage" total-items="studies.length" ng-model="paging.studies.currentPage"></ul>
+        <h4>Select a study for {{report.client.name}}/{{report.drug.name}}</h4>
+        <div class="col-sm-3 col-md-3 col-lg-3 text-right"></div>
+        <div class="col-sm-6 col-md-6 col-lg-6 ">
+            <select class="form-control" id="studies" ng-options="study.name for study in report.drug.studies"
+                    ng-model="report.study">
+            </select>
+        </div>
+        <div class="col-sm-3 col-md-3 col-lg-3 ">
+            <button type="button" class="btn btn-default btn-add-drug" ng-click="handleEditStudy(true)">Add New Study</button>
+            <button type="button" ng-show="report.study.id != null" class="btn btn-default btn-sm btn-add-client"
+                    ng-click="handleEditStudy()">Edit Study</button>
+        </div>
     </div>
 
     <div class="row" ng-show="step == 4">

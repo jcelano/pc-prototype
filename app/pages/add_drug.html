@@ -1,0 +1,38 @@
+<div modal="showModal" close="cancel()">
+    <div class="panel-heading">Drug form</div>
+    <div class="panel-body">
+        <form class="form-horizontal" name="addDrugForm">
+            <div class="form-group" ng-class="{ 'has-error': addDrugForm.drug_id.$touched && addDrugForm.drug_id.$invalid }">
+                <label class="control-label col-sm-2" for="drug_id">ID:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="drug_id" name="drug_id"
+                           required="true" ng-minlength="3" drug-id
+                           placeholder="Enter id" ng-model="drug.id">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="drug_name">Name:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="drug_name" name="drug_name"
+                           required="true" ng-minlength="5"
+                           placeholder="Enter name" ng-model="drug.name">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default" ng-click="cancel()">Cancel</button>
+                    <button type="submit" class="btn btn-default" ng-click="handleDeleteDrug()" ng-show="!is_new" >Delete</button>
+                    <button type="submit" class="btn btn-primary" ng-click="handleAddDrug()" ng-disabled="!addDrugForm.$valid">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="panel-footer">
+        <p class="text-danger" ng-if="addDrugForm.drug_id.$touched && addDrugForm.drug_id.$error.required"> ID field is required</p>
+        <p class="text-danger" ng-if="addDrugForm.drug_id.$touched && addDrugForm.drug_id.$error.minlength"> ID field should be at least 3 characters</p>
+        <p class="text-danger" ng-if="addDrugForm.drug_id.$touched && addDrugForm.drug_id.$error.idExistsValidator"> ID already being used</p>
+        <p class="text-danger" ng-if="addDrugForm.drug_name.$touched && addDrugForm.drug_name.$error.required"> Name field is required</p>
+        <p class="text-danger" ng-if="addDrugForm.drug_name.$touched && addDrugForm.drug_name.$error.minlength"> Name field should be at least 5 characters</p>
+    </div>
+</div>

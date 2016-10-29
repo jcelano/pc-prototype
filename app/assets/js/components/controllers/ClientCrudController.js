@@ -8,11 +8,19 @@ pscApp.controller("ClientCrudController", ['$uibModalInstance', '$scope', 'Clien
     }
     else{
         $scope.client = ClientService.newInstance();
-        $scope.client.id = "CLI1234;";
-        $scope.client.name = "Client #1234";
         $scope.is_new = true;
 
     }
+
+    $scope.clientIdExists = function(id){
+        return ClientService.getClientById(id) != null;
+    };
+
+    $scope.handleDeleteClient = function () {
+        ClientService.deleteClient($scope.client.id);
+        $uibModalInstance.dismiss('cancel');
+    };
+
     $scope.handleAddClient = function () {
 
         if($scope.is_new){
@@ -25,4 +33,27 @@ pscApp.controller("ClientCrudController", ['$uibModalInstance', '$scope', 'Clien
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     };
-}]);
+}]).directive('clientId', ['ClientService', function(ClientService) {
+        return {
+
+            // limit usage to argument only
+            restrict: 'A',
+
+            // require NgModelController, i.e. require a controller of ngModel directive
+            require: 'ngModel',
+
+            // create linking function and pass in our NgModelController as a 4th argument
+            link: function(scope, element, attr, ctrl) {
+                function customValidator(ngModelValue) {
+                    if(ClientService.getClientById(ngModelValue)){
+                        ctrl.$setValidity('idExistsValidator', false);
+                    }
+                    else{
+                        ctrl.$setValidity('idExistsValidator', true);
+                    }
+                    return ngModelValue;
+                }
+                ctrl.$parsers.push(customValidator);
+            }
+        };
+    }]);

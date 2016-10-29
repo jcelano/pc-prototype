@@ -1,25 +1,40 @@
 <div modal="showModal" close="cancel()">
-    <div class="panel-heading">Add new client</div>
+    <div class="panel-heading">Client form</div>
     <div class="panel-body">
-        <form class="form-horizontal">
-            <div class="form-group">
+        <form class="form-horizontal" name="addClientForm">
+            <div class="form-group" ng-class="{ 'has-error': addClientForm.client_id.$touched && addClientForm.client_id.$invalid }">
                 <label class="control-label col-sm-2" for="client_id">ID:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="client_id" placeholder="Enter id" ng-model="client.id">
+                    <input type="text" class="form-control" id="client_id" name="client_id" client-id
+                           required="true" ng-minlength="3" ui-validate="{clientIdExist}"
+                           placeholder="Enter id" ng-model="client.id">
                 </div>
             </div>
+
             <div class="form-group">
                 <label class="control-label col-sm-2" for="client_name">Name:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" id="client_name" placeholder="Enter name" ng-model="client.name">
+                    <input type="text" class="form-control" id="client_name" name="client_name"
+                           required="true" ng-minlength="5"
+                           placeholder="Enter name" ng-model="client.name">
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <button type="submit" class="btn btn-default" ng-click="cancel()">Cancel</button>
-                    <button type="submit" class="btn btn-primary" ng-click="handleAddClient()">Save</button>
+                    <button type="submit" class="btn btn-default" ng-click="handleDeleteClient()" ng-show="!is_new" >Delete</button>
+                    <button type="submit" class="btn btn-primary" ng-click="handleAddClient()" ng-disabled="!addClientForm.$valid">Save</button>
                 </div>
             </div>
         </form>
+    </div>
+    <div class="panel-footer">
+        <p class="text-danger" ng-if="addClientForm.client_id.$touched && addClientForm.client_id.$error.required"> ID field is required</p>
+        <p class="text-danger" ng-if="addClientForm.client_id.$touched && addClientForm.client_id.$error.minlength"> ID field should be at least 3 characters</p>
+        <p class="text-danger" ng-if="addClientForm.client_id.$touched && addClientForm.client_id.$error.idExistsValidator"> ID already being used</p>
+        <p class="text-danger" ng-if="addClientForm.client_name.$touched && addClientForm.client_name.$error.required"> Name field is required</p>
+        <p class="text-danger" ng-if="addClientForm.client_name.$touched && addClientForm.client_name.$error.minlength"> Name field should be at least 5 characters</p>
+
+
     </div>
 </div>
