@@ -1,8 +1,8 @@
 'use strict';
 angular.module('procClinSafeApp').controller('reportWizardController',
-    ['$scope', '$uibModal', 'PageFactory', 'ReportService', 'ClientService', 'StudyService', 'DeliverableFactory',
+    ['$scope', '$uibModal', 'PageFactory', 'ReportService', 'ClientService', 'StudyService', 'DeliverableService',
     function ReportWizardController($scope, $uibModal, PageFactory, ReportService, ClientService,
-                                    StudyService, DeliverableFactory) {
+                                    StudyService, DeliverableService) {
         $scope.instructions = "To add a new report, first choose a client and then click the next button";
         $scope.app_info = {version: PageFactory.version(), title:PageFactory.title()};
         $scope.paging = {studies:{currentPage:1, itemsPerPage:5},deliverables:{currentPage:1, itemsPerPage:4}};
@@ -28,7 +28,7 @@ angular.module('procClinSafeApp').controller('reportWizardController',
                 }
             }).result.then(function(data){
                 console.log(data);
-                $scope.client = data;
+                $scope.report.client = data;
             });
         };
 
@@ -44,7 +44,7 @@ angular.module('procClinSafeApp').controller('reportWizardController',
                 }
             }).result.then(function(data){
                 //console.log(data);
-                //$scope.client.drug = data;
+                $scope.report.drug = data;
             });
         };
 
@@ -61,14 +61,100 @@ angular.module('procClinSafeApp').controller('reportWizardController',
                 }
             }).result.then(function(data){
                 //console.log(data);
-                //$scope.client.drug = data;
+                $scope.report.study = data;
             });
+        };
+
+        $scope.handleEditDeliverable = function(is_new){
+            $uibModal.open({
+                //parentElem:parentElem,
+                animation: true,
+                templateUrl: 'pages/add_deliverable.html',
+                controller: 'DeliverableCrudController',
+                resolve: {
+                    client: $scope.report.client,
+                    drug: $scope.report.drug,
+                    study: $scope.report.study,
+                    deliverable:DeliverableService.newInstance()
+                }
+            }).result.then(function(data){
+                //console.log(data);
+                $scope.report.deliverables.push(data);
+            });
+        };
+
+        $scope.handleAddDeliverable = function(){
+            const deliverable = DeliverableService.newInstance();
+
+            ClientService.addDeliverableToStudy($scope.report.client.id, $scope.report.drug.id, $scope.report.study.id, deliverable);
+        };
+
+        $scope.handleSaveDeliverable = function(id){
+            ClientService.saveState();
+        };
+
+
+        $scope.handleDeleteDeliverable = function(id){
+            ClientService.deleteDeliverableFromStudy($scope.report.client.id, $scope.report.drug.id, $scope.report.study.id, id);
         };
 
         $scope.incrementStep = function(v){
             $scope.step = $scope.step + v;
             moveProgressBar(v);
+            setupReportValues();
         };
+
+
+        $scope.readyForNextStep = function(report){
+            switch($scope.step){
+                case 1:
+                    return report.client != null && report.client.id != null;
+                    break;
+                case 2:
+                    return report.drug != null && report.drug.id != null;
+                    break;
+                case 3:
+                    return report.study != null && report.study.id != null;
+                    break;
+                case 4:
+                    return report.deliverables != null && report.deliverables.length > 0;
+                    break;
+
+            }
+            return false;
+        };
+
+        function setupReportValues(){
+            const report = $scope.report;
+            switch($scope.step){
+                case 1:
+                    if((report.client == null || report.client.id == null) && $scope.clients.length > 0){
+                        //the client wasn't already set and we have a client
+                        $scope.report.client = $scope.clients[0];
+                    }
+                    break;
+                case 2:
+                    if((report.drug == null || report.drug.id == null)
+                        && report.client.drugs != null && report.client.drugs.length > 0 ){
+                        //the client wasn't already set and we have a client
+                        $scope.report.drug = $scope.report.client.drugs[0];
+                    }
+                    else{
+                        //$scope.report.drug ==
+                    }
+
+                    return report.drug != null && report.drug.id != null;
+                    break;
+                case 3:
+                    return report.study != null && report.study.id != null;
+                    break;
+                case 4:
+                    return report.deliverables != null && report.deliverables.length > 0;
+                    break;
+
+            }
+        }
+
 
         function moveProgressBar(v){
 

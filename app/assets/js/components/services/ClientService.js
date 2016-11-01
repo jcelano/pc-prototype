@@ -56,6 +56,16 @@ angular.module('clientService', [])
             FileService.saveClients(clients);
         };
 
+        var addDeliverableToStudy = function(client_id, drug_id, study_id, deliverable){
+            const study = getStudyByDrugById(client_id, drug_id, study_id);
+            if(study.deliverables == null){
+                study.deliverables = [];
+            }
+
+            study.deliverables.push(deliverable);
+            FileService.saveClients(clients);
+        }
+
         /*
         * deletes a client from the system
         * */
@@ -79,7 +89,7 @@ angular.module('clientService', [])
             if(client != null && client.drugs != null){
                 for(let i=0;i<client.drugs.length;++i){
                     if(_id_eq(client.drugs[i].id,id)){
-                        client.drugs[i].splice(i, 1);
+                        client.drugs.splice(i, 1);
                         FileService.saveClients(clients);
                         return true;
                     }
@@ -94,7 +104,20 @@ angular.module('clientService', [])
             if(drug != null && drug.studies != null){
                 for(let i=0;i<drug.studies.length;++i){
                     if(_id_eq(drug.studies[i].id, study_id)){
-                        drug.studies[i].splice(i, 1);
+                        drug.studies.splice(i, 1);
+                        FileService.saveClients(clients);
+                        return true;
+                    }
+                }
+            }
+        };
+
+        var deleteDeliverableFromStudy = function(client_id, drug_id, study_id, deliverable_id){
+            const study = getStudyByDrugById(client_id, drug_id, study_id);
+            if(study != null && study.deliverables.length>0){
+                for(let i=0;i<study.deliverables.length;++i){
+                    if(_id_eq(study.deliverables[i].id, deliverable_id)){
+                        study.deliverables.splice(i, 1);
                         FileService.saveClients(clients);
                         return true;
                     }
@@ -131,8 +154,21 @@ angular.module('clientService', [])
             const drug = getDrugByClientById(client_id, drug_id);
             if(drug != null && drug.studies != null){
                 for(let i=0;i<drug.studies.length;++i){
-                    if(_id_eq(drug.studies[i].id,id)){
+                    if(_id_eq(drug.studies[i].id,study_id)){
                         return drug.studies[i];
+                    }
+                }
+            }
+            return null;
+        } ;
+
+
+        var getDeliverableByStudyById = function(client_id, drug_id, study_id, deliverable_id){
+            const study = getStudyByDrugById(client_id, drug_id, study_id);
+            if(study != null && study.deliverables != null){
+                for(let i=0;i<study.deliverables.length;++i){
+                    if(_id_eq(study.deliverables[i].id,study_id)){
+                        return study.deliverables[i];
                     }
                 }
             }
@@ -163,12 +199,15 @@ angular.module('clientService', [])
             list:list,
             clients:function(){return clients},
             addClient:addClient,
+            addDeliverableToStudy:addDeliverableToStudy,
             addDrugToClient:addDrugToClient,
             addStudyToDrug:addStudyToDrug,
             deleteClient:deleteClient,
+            deleteDeliverableFromStudy:deleteDeliverableFromStudy,
             deleteDrugFromClient:deleteDrugFromClient,
             deleteStudyFromDrug:deleteStudyFromDrug,
             getClientById:getClientById,
+            getDeliverableByStudyById:getDeliverableByStudyById,
             getDrugByClientById:getDrugByClientById,
             getStudyByDrugById:getStudyByDrugById,
             newInstance: function(){

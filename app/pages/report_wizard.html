@@ -76,7 +76,7 @@
 
     <div class="row" ng-show="step == 4">
         <h4>Select one or more deliverables and set there dates:</h4>
-        <button type="button" class="btn btn-default btn-add-drug">Add New Deliverable</button>
+        <button type="button" class="btn btn-default btn-add-drug" ng-click="handleEditDeliverable(true)">Add New Deliverable</button>
         <table class="table table-striped table-bordered" cellspacing="0" width="100%">
             <thead>
             <tr>
@@ -87,12 +87,16 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="deliverable in deliverables.slice(((paging.deliverables.currentPage-1)*paging.deliverables.itemsPerPage), ((paging.deliverables.currentPage)*paging.deliverables.itemsPerPage))">
-                <td><input type="checkbox"  ng-value="deliverable"></td>
-                <td>{{deliverable.id}}</td>
-                <td>{{deliverable.name}}</td>
+            <tr ng-repeat="deliverable in report.study.deliverables.slice(((paging.deliverables.currentPage-1)*paging.deliverables.itemsPerPage), ((paging.deliverables.currentPage)*paging.deliverables.itemsPerPage))">
+                <td><input type="checkbox">{{deliverable | json}}</td>
+                <td><input type="text" ng-model="deliverable.id"/></td>
+                <td><input type="text" ng-model="deliverable.name"/></td>
                 <td>
                     <md-datepicker ng-model="deliverable.date" md-placeholder="Enter date"></md-datepicker>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-small" ng-click="handleSaveDeliverable(deliverable.id)">Save</button>
+                    <button type="button" class="btn btn-small" ng-click="handleDeleteDeliverable(deliverable.id)">Delete</button>
                 </td>
             </tr>
             </tbody>
@@ -109,7 +113,7 @@
     <div class="row top-buffer" >
         <div class="col-sm-12 col-md-12 col-lg-12 pull-right text-right">
             <button type="button" class="btn btn-default btn-previous" ng-click="incrementStep(-1)" ng-show="step>1">Previous</button>
-            <button type="button" class="btn btn-primary btn-next" ng-click="incrementStep(1)" ng-disabled="">Next</button>
+            <button type="button" class="btn btn-primary btn-next" ng-click="incrementStep(1)" ng-disabled="!readyForNextStep(report)">Next</button>
         </div>
     </div>
 
@@ -119,23 +123,23 @@
 {{clients | json}}
 </pre>
 
-<script type="text/ng-template" id="add_client.html">
+<!--<script type="text/ng-template" id="add_client.html">-->
 
-    <div class="modal-header">
-        <h3 class="modal-title" id="modal-title">I'm a modal!</h3>
-    </div>
-    <div class="modal-body" id="modal-body">
-        <ul>
-            <li ng-repeat="item in $ctrl.items">
-                <a href="#" ng-click="$event.preventDefault(); $ctrl.selected.item = item">{{ item }}</a>
-            </li>
-        </ul>
-        Selected: <b>{{ $ctrl.selected.item }}</b>
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
-        <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
-    </div>
+    <!--<div class="modal-header">-->
+        <!--<h3 class="modal-title" id="modal-title">I'm a modal!</h3>-->
+    <!--</div>-->
+    <!--<div class="modal-body" id="modal-body">-->
+        <!--<ul>-->
+            <!--<li ng-repeat="item in $ctrl.items">-->
+                <!--<a href="#" ng-click="$event.preventDefault(); $ctrl.selected.item = item">{{ item }}</a>-->
+            <!--</li>-->
+        <!--</ul>-->
+        <!--Selected: <b>{{ $ctrl.selected.item }}</b>-->
+    <!--</div>-->
+    <!--<div class="modal-footer">-->
+        <!--<button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>-->
+        <!--<button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>-->
+    <!--</div>-->
 
-</script>
+<!--</script>-->
 
