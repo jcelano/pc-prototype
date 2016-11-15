@@ -4,17 +4,18 @@ var pcs = angular.module('procClinSafeApp');
 pcs.service('FileService', function() {
 
     function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
-
     const electron = nodeRequire('electron');
     const jetpack = _interopDefault(nodeRequire('fs-jetpack'));
+    const path = nodeRequire('path');
 
     const app = electron.remote;
     const dialog = app.dialog;
-    const path = nodeRequire('path');
-    const fs = nodeRequire('fs');
     const DATA_DIR = "data";
-    const CLIENTS_FILE = DATA_DIR + path.sep + "clients.json";
+
     const userDataDir = jetpack.cwd(app.app.getPath('userData'));
+    const CLIENTS_FILE = userDataDir.path() + path.sep + DATA_DIR + path.sep + "clients.json";
+
+    const REPORTS_DIR = userDataDir.path() + path.sep + DATA_DIR + path.sep + "reports";
     // service is just a constructor function
     // that will be called with 'new'
 
@@ -24,20 +25,41 @@ pcs.service('FileService', function() {
 
     this.showOpen = showOpen;
 
-    this.saveClients = function(clients){
-        var fileName = userDataDir.path() + path.sep + CLIENTS_FILE;
-        this.saveJSON(fileName, clients)
+    this.saveReportSettings = function(report){
+        const fileName = REPORTS_DIR + path.sep + "report_" + report.id + ".json";
+        this.saveJSON(fileName, report);
     };
 
+    this.createReportDirectoriesAndData = function(report){
+        const CLIENT_DIR = REPORTS_DIR + path.sep + report.client.id;
+
+    };
+
+    /*
+    saves the client meta data that is used for the UI
+    * */
+    this.saveClients = function(clients){
+        this.saveJSON(fileName, CLIENTS_FILE)
+    };
+
+    /*
+    * load the client meta data that is use by the UI
+    * */
     this.loadClients = function(){
-        var fileName = userDataDir.path() + path.sep + CLIENTS_FILE;
-        var clients =  readJson(fileName);
+        var fileName = CLIENTS_FILE;
+
+        console.log(fileName);
+
+        var clients =  readJsonAsync(fileName);
         if(clients === undefined){
             clients = [];
         }
         return clients;
     };
 
+    /*
+     helper function to save JSON
+    * */
     this.saveJSON = function(fileName, obj){
         saveChanges(fileName, JSON.stringify(obj));
     };
@@ -74,7 +96,7 @@ pcs.service('FileService', function() {
                 return;
             }
 
-            fs.writeFile(fileName, content, function (err) {
+            jetpack.writeFile(fileName, content, function (err) {
                 if(err){
                     alert("An error ocurred creating the file "+ err.message)
                 }
@@ -100,7 +122,7 @@ pcs.service('FileService', function() {
     }
 
     function readFile(filepath) {
-        return fs.readFile(filepath, 'utf-8', function (err, data) {
+        return jetpack.readFile(filepath, 'utf-8', function (err, data) {
             if(err){
                 alert("An error ocurred reading the file :" + err.message);
                 return;
@@ -111,10 +133,10 @@ pcs.service('FileService', function() {
     }
 
     function deleteFile(filepath){
-        fs.exists(filepath, function(exists) {
+        jetpack.exists(filepath, function(exists) {
             if(exists) {
                 // File exists deletings
-                fs.unlink(filepath,function(err){
+                jetpack.unlink(filepath,function(err){
                     if(err){
                         alert("An error ocurred updating the file"+ err.message);
                         console.log(err);

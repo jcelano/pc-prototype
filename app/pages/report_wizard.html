@@ -1,126 +1,167 @@
 
 
-<form role="form" action="" method="post" class="f1 foobar">
-    <div class="f1-steps">
-        <div class="f1-progress">
-            <div class="f1-progress-line" data-now-value="{{progressBarPct}}" data-number-of-steps="{{numberOfSteps}}" style="width:{{progressBarPct}}%;"></div>
-        </div>
-        <div class="f1-step active" ng-class="">
-            <div class="f1-step-icon"><i class="fa fa-user"></i></div>
-            <p>Client</p>
-        </div>
-        <div class="f1-step" ng-class="step>1?'active':''">
-            <div class="f1-step-icon"><i class="fa fa-medkit"></i></div>
-            <p>Drug</p>
-        </div>
-        <div class="f1-step" ng-class="step>2?'active':''">
-            <div class="f1-step-icon"><i class="fa fa-stethoscope"></i></div>
-            <p>Studies</p>
-        </div>
-        <div class="f1-step" ng-class="step>3?'active':''">
-            <div class="f1-step-icon"><i class="fa fa-calendar"></i></div>
-            <p>Deliverables</p>
-        </div>
-        <div class="f1-step" ng-class="step>4?'active':''">
-            <div class="f1-step-icon"><i class="fa fa-file-text-o"></i></div>
-            <p>Reports</p>
-        </div>
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Report Wizard
     </div>
-
-
-
-    <div class="row" ng-show="step == 1" class="fade">
-        <h4>Select a client</h4>
-        <div class="col-sm-1 col-md-1 col-lg-1 text-right"></div>
-        <div class="col-sm-6 col-md-6 col-lg-6 ">
-            <select class="form-control" id="client" ng-options="client.name for client in clients | orderBy:'name'" ng-model="report.client" ng-change="handleClientChanged()">
-            </select>
+    <div class="panel-body">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-2 col-sm-offset-1 text-center" ng-class="step>0?'icon_success':''">
+                    <i class="fa fa-user"></i><i class="fa fa-check" ng-show="step>0"></i>
+                    <p>Client</p>
+                </div>
+                <div class="col-sm-2 text-center" ng-class="report.drug.id != null?'icon_success':''">
+                    <i class="fa fa-medkit"></i><i class="fa fa-check" ng-show="report.drug.id != null"></i>
+                    <p>Drug</p>
+                </div>
+                <div class="col-sm-2 text-center"  ng-class="report.study.id != null?'icon_success':''">
+                    <i class="fa fa-stethoscope"></i><i class="fa fa-check" ng-show="report.study.id != null"></i>
+                    <p>Studies</p>
+                </div>
+                <div class="col-sm-2 text-center"  ng-class="report.deliverables != null?'icon_success':''">
+                    <d<i class="fa fa-calendar"></i><i class="fa fa-check" ng-show="report.deliverables != null"></i>
+                    <p>Deliverables</p>
+                </div>
+                <div class="col-sm-2 text-center"  ng-class="report.parameters.header != null?'icon_success':''">
+                    <i class="fa fa-file-text-o"></i><i class="fa fa-check" ng-show="step>0"></i>
+                    <p>Reports</p>
+                </div>
+            </div>
 
         </div>
-        <div class=" btn-group">
-            <button type="button" class="btn btn-default btn-sm btn-add-client" ng-click="handleEditClient(true)">Add Client</button>
-            <button type="button" ng-show="report.client.id != null" class="btn btn-default btn-sm btn-add-client" ng-click="handleEditClient()">Edit Client</button>
-        </div>
+
+
+        <form role="form" action="" method="post">
+
+            <div class="row">
+                <div class="col-sm-offset-3 col-sm-6">
+                    <label for="client">Client</label>
+                    <div class="input-group">
+                        <select class="form-control" id="client" ng-options="client.name for client in clients | orderBy:'name'"
+                                ng-model="report.client" ng-change="handleClientChanged()"></select>
+
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                    ng-click="handleEditClient(true)"
+                                    aria-haspopup="true" aria-expanded="false">Add <span class="fa fa-plus"></span></button>
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                    ng-disable="report.client.id == null"  ng-click="handleEditClient()"
+                                    aria-haspopup="true" aria-expanded="false">Edit <span class="fa fa-pencil"></span></button>
+                            </ul>
+                        </div><!-- /btn-group -->
+                    </div><!-- /input-group -->
+                </div><!-- /.col-lg-6 -->
+            </div>
+
+            <div class="row" ng-show="report.client.id != null">
+                <div class="col-sm-offset-3 col-sm-6">
+                    <label for="drug">Drug</label>
+                    <div class="input-group">
+                        <select class="form-control" id="drug" ng-options="drug.name for drug in report.client.drugs"
+                                ng-model="report.drug">
+                        </select>
+
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                    ng-click="handleEditDrug(true)"
+                                    aria-haspopup="true" aria-expanded="false">Add <span class="fa fa-plus"></span></button>
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                    ng-disable="report.drug.id == null"  ng-click="handleEditDrug()"
+                                    aria-haspopup="true" aria-expanded="false">Edit <span class="fa fa-pencil"></span></button>
+                            </ul>
+                        </div><!-- /btn-group -->
+                    </div><!-- /input-group -->
+                </div><!-- /.col-lg-6 -->
+            </div>
+
+            <div class="row" ng-show="report.drug.id != null">
+                <div class="col-sm-offset-3 col-sm-6">
+                    <label for="study">Study</label>
+                    <div class="input-group">
+                        <select class="form-control" id="study" ng-options="study.name for study in report.drug.studies"
+                                ng-model="report.study">
+                        </select>
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                    ng-click="handleEditStudy(true)"
+                                    aria-haspopup="true" aria-expanded="false">Add <span class="fa fa-plus"></span></button>
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                    ng-disable="report.study.id == null"  ng-click="handleEditStudy()"
+                                    aria-haspopup="true" aria-expanded="false">Edit <span class="fa fa-pencil"></span></button>
+                            </ul>
+                        </div><!-- /btn-group -->
+                    </div><!-- /input-group -->
+                </div><!-- /.col-lg-6 -->
+            </div>
+
+            <div class="row" ng-show="report.study.id != null">
+                <div class="col-sm-offset-3 col-sm-6">
+                    <label>Deliverables</label>
+
+                    <table class="table table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" /></th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th><button type="button" class="btn btn-default btn-add-drug" ng-click="handleEditDeliverable(true)"> Add<span class="fa fa-plus"></span></button></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="deliverable in report.study.deliverables">
+                            <td><input type="checkbox" class="deliverable_checkbox"
+                                       ng-checked="selection.id == deliverable.id"
+                                       ng-click="toggleDeliverableSelection(deliverable)"
+                                       ng-model="deliverable.checked" /></td>
+                            <td>{{deliverable.id}}</td>
+                            <td>{{deliverable.name}}</td>
+                            <td>{{deliverable.date | date : format : shortDate }}</td>
+                            <td>
+                                <button type="button" class="btn btn-sm btn-default" ng-click="handleDeleteDeliverable(deliverable.id)">
+                                    Delete <i class="fa fa-minus-circle danger"></i></button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <!--<ul uib-pagination items-per-page="paging.deliverables.itemsPerPage" total-items="deliverables.length" ng-model="paging.deliverables.currentPage"></ul>-->
+
+                </div>
+
+            </div>
+
+            <div class="row" ng-show="report.deliverables != null">
+                <div class="col-sm-offset-3 col-sm-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Report Parameters</div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <label for="report_header">Report header</label>
+                                    <input class="form-control" type="text" id="report_header" ng-model="report.parameters.header"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <button class="btn btn-primary pull-right" type="button" ng-click="handleRunReport()">Run Report</button>
+                                </div></div>
+
+                        </div>
+                    </div>
+                </div><!-- /.col-lg-6 -->
+            </div>
+        </form>
+
+
     </div>
+</div>
 
 
-    <div class="row" ng-show="step == 2" class="fade">
-        <h4>Select a drug for {{report.client.name}}</h4>
-        <div class="col-sm-3 col-md-3 col-lg-3 text-right"></div>
-        <div class="col-sm-6 col-md-6 col-lg-6 ">
-            <select class="form-control" id="drugs" ng-options="drug.name for drug in report.client.drugs"
-                    ng-model="report.drug">
-            </select>
-
-        </div>
-        <div class="col-sm-3 col-md-3 col-lg-3 ">
-            <button type="button" class="btn btn-default btn-add-drug" ng-click="handleEditDrug(true)">Add New Drug</button>
-            <button type="button" ng-show="report.drug.id != null" class="btn btn-default btn-sm btn-add-client" ng-click="handleEditClient()">Edit Drug</button>
-        </div>
-    </div>
-
-    <div class="row" ng-show="step == 3">
-        <h4>Select a study for {{report.client.name}}/{{report.drug.name}}</h4>
-        <div class="col-sm-3 col-md-3 col-lg-3 text-right"></div>
-        <div class="col-sm-6 col-md-6 col-lg-6 ">
-            <select class="form-control" id="studies" ng-options="study.name for study in report.drug.studies"
-                    ng-model="report.study">
-            </select>
-        </div>
-        <div class="col-sm-3 col-md-3 col-lg-3 ">
-            <button type="button" class="btn btn-default btn-add-drug" ng-click="handleEditStudy(true)">Add New Study</button>
-            <button type="button" ng-show="report.study.id != null" class="btn btn-default btn-sm btn-add-client"
-                    ng-click="handleEditStudy()">Edit Study</button>
-        </div>
-    </div>
-
-    <div class="row" ng-show="step == 4">
-        <h4>Select one or more deliverables and set there dates:</h4>
-        <button type="button" class="btn btn-default btn-add-drug" ng-click="handleEditDeliverable(true)">Add New Deliverable</button>
-        <table class="table table-striped table-bordered" cellspacing="0" width="100%">
-            <thead>
-            <tr>
-                <th><input type="checkbox" /></th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Date</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="deliverable in report.study.deliverables.slice(((paging.deliverables.currentPage-1)*paging.deliverables.itemsPerPage), ((paging.deliverables.currentPage)*paging.deliverables.itemsPerPage))">
-                <td><input type="checkbox">{{deliverable | json}}</td>
-                <td><input type="text" ng-model="deliverable.id"/></td>
-                <td><input type="text" ng-model="deliverable.name"/></td>
-                <td>
-                    <md-datepicker ng-model="deliverable.date" md-placeholder="Enter date"></md-datepicker>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-small" ng-click="handleSaveDeliverable(deliverable.id)">Save</button>
-                    <button type="button" class="btn btn-small" ng-click="handleDeleteDeliverable(deliverable.id)">Delete</button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <ul uib-pagination items-per-page="paging.deliverables.itemsPerPage" total-items="deliverables.length" ng-model="paging.deliverables.currentPage"></ul>
-
-    </div>
-
-    <div class="row" ng-show="step == 5">
-        <h4>Run the report</h4>
-        You will be running a report for {{client.name}} for {{client.drug.name}} for {{client.drug.study.name}}, the report settings are below:
-    </div>
-
-    <div class="row top-buffer" >
-        <div class="col-sm-12 col-md-12 col-lg-12 pull-right text-right">
-            <button type="button" class="btn btn-default btn-previous" ng-click="incrementStep(-1)" ng-show="step>1">Previous</button>
-            <button type="button" class="btn btn-primary btn-next" ng-click="incrementStep(1)" ng-disabled="!readyForNextStep(report)">Next</button>
-        </div>
-    </div>
-
-</form>
-
-<pre ng-show="true">
-{{clients | json}}
+<pre ng-show="false">
+{{report | json}}
 </pre>
 
 <!--<script type="text/ng-template" id="add_client.html">-->

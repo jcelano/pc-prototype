@@ -1,7 +1,7 @@
 'use strict';
 angular.module('procClinSafeApp').controller('reportWizardController',
-    ['$scope', '$uibModal', 'PageFactory', 'ReportService', 'ClientService', 'StudyService', 'DeliverableService',
-    function ReportWizardController($scope, $uibModal, PageFactory, ReportService, ClientService,
+    ['$timeout', '$scope', '$uibModal', 'PageFactory', 'ReportService', 'ClientService', 'StudyService', 'DeliverableService',
+    function ReportWizardController($timeout, $scope, $uibModal, PageFactory, ReportService, ClientService,
                                     StudyService, DeliverableService) {
         $scope.instructions = "To add a new report, first choose a client and then click the next button";
         $scope.app_info = {version: PageFactory.version(), title:PageFactory.title()};
@@ -10,12 +10,6 @@ angular.module('procClinSafeApp').controller('reportWizardController',
         $scope.numberOfSteps = 5;
         $scope.progressBarPct = 10;
         $scope.report = ReportService.newInstance();
-
-        $scope.clients = ClientService.list();
-        if($scope.clients.length > 0){
-            $scope.report.client = $scope.clients[0];
-        }
-
 
         $scope.handleEditClient = function(is_new){
             $uibModal.open({
@@ -79,6 +73,9 @@ angular.module('procClinSafeApp').controller('reportWizardController',
                 }
             }).result.then(function(data){
                 //console.log(data);
+                if($scope.report.deliverables == null){
+                    $scope.report.deliverables = [];
+                }
                 $scope.report.deliverables.push(data);
             });
         };
@@ -89,6 +86,26 @@ angular.module('procClinSafeApp').controller('reportWizardController',
             ClientService.addDeliverableToStudy($scope.report.client.id, $scope.report.drug.id, $scope.report.study.id, deliverable);
         };
 
+        $scope.toggleDeliverableSelection = function(deliverable){
+            if($scope.report.deliverables == null){
+                $scope.report.deliverables = [];
+            }
+
+            if(deliverable.checked){
+                $scope.report.deliverables.push(deliverable);
+            }
+            else{
+                if($scope.report.deliverables.length > 0){
+                    for(let i = 0;i<$scope.report.deliverables.length;++i){
+                        if($scope.report.deliverables[i].id == deliverable.id){
+                            $scope.report.deliverables.splice(i, 1);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
         $scope.handleSaveDeliverable = function(id){
             ClientService.saveState();
         };
@@ -98,6 +115,9 @@ angular.module('procClinSafeApp').controller('reportWizardController',
             ClientService.deleteDeliverableFromStudy($scope.report.client.id, $scope.report.drug.id, $scope.report.study.id, id);
         };
 
+        $scope.handleRunReport =  function(){
+            ReportService.saveReportSettings($scope.report);
+        }
         $scope.incrementStep = function(v){
             $scope.step = $scope.step + v;
             moveProgressBar(v);
@@ -174,4 +194,17 @@ angular.module('procClinSafeApp').controller('reportWizardController',
 
         }
 
-}]);
+        return ClientService.list().then(function(clients){
+            //this $timeout is here b/c the File reading doesn't call $scope.digest for some reason
+            // if we get rid of the file part we can remove the $timeout
+            $timeout(function() {
+                $scope.clients = clients;
+                if ($scope.clients.length > 0) {
+                    $scope.report.client = $scope.clients[0];
+                }
+                // $scope.$apply();
+            });
+        });
+
+
+    }]);
