@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "the api for the Prod Clin Safe app",
   "engines": {
-    "node": "6.2"
+    "node": "6.2.0"
   },
   "main": "index.js",
   "scripts": {
