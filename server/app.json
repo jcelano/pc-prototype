@@ -1,0 +1,8 @@
+{
+  "name": "Proc Clin Safe Online",
+  "description": "an online version of proclin safe",
+  "repository": "https://github.com/jcelano",
+  "logo": "desolate-sierra-98327.herokuapp.com/node.svg",
+  "keywords": ["node", "express", "static"],
+  "image": "heroku/nodejs"
+}

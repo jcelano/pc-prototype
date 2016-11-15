@@ -1,0 +1,26 @@
+{
+  "name": "Proc Clin Safe API",
+  "version": "0.0.1",
+  "description": "the api for the Prod Clin Safe app",
+  "engines": {
+    "node": "6.2"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "ejs": "2.4.1",
+    "express": "4.13.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jcelano/pc-prototype.git"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ],
+  "license": "MIT"
+}
