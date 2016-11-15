@@ -4,5 +4,6 @@
     <file url="PROJECT" libraries="{github-electron-DefinitelyTyped}" />
     <includedPredefinedLibrary name="ECMAScript 6" />
     <includedPredefinedLibrary name="Node.js Core" />
+    <excludedPredefinedLibrary name="pc-prototype/server/app/node_modules" />
   </component>
 </project>
