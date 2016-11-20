@@ -3,7 +3,7 @@ var pcs = angular.module('procClinSafeApp');
 
 pcs.service('FileService', ['$http', function($http) {
 
-    const CLIENTS_FILE = "/files/client";// userDataDir.path() + path.sep + DATA_DIR + path.sep + "clients.json";
+    const CLIENTS_FILE =  window.serverFileLocation + "/files/client";// userDataDir.path() + path.sep + DATA_DIR + path.sep + "clients.json";
 
     const REPORTS_DIR = "https://desolate-sierra-98327.herokuapp.com/reports";
 

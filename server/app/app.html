@@ -23,6 +23,11 @@
                 delete window.require;
                 delete window.exports;
                 delete window.module;
+                window.serverFileLocation = "https://dry-waters-26669.herokuapp.com";
+            }
+            else{
+                //this is web mode
+                window.serverFileLocation = "";
             }
         </script>
 
@@ -100,7 +105,7 @@
 
     <script src="bower_components/svg-assets-cache.js/svg-assets-cache.js"></script>
 
-    <script src="assets/js/scripts.js"></script>
+    <!--<script src="assets/js/scripts.js"></script>-->
 
     <script src="assets/js/app.js"></script>
     <script src="assets/js/components/controllers/MainController.js"></script>

@@ -11,6 +11,12 @@ angular.module('procClinSafeApp').controller('reportWizardController',
         $scope.progressBarPct = 10;
         $scope.report = ReportService.newInstance();
 
+        $scope.handleClientChanged = function(){
+            $scope.report.drug = null;
+            $scope.report.study = null;
+            $scope.report.deliverables = null;
+        };
+
         $scope.handleEditClient = function(is_new){
             $uibModal.open({
                 //parentElem:parentElem,
@@ -34,7 +40,7 @@ angular.module('procClinSafeApp').controller('reportWizardController',
                 controller: 'DrugCrudController',
                 resolve: {
                     client: $scope.report.client,
-                    drug: !is_new?$scope.report.client.drug:null
+                    drug: !is_new?$scope.report.drug:null
                 }
             }).result.then(function(data){
                 //console.log(data);
@@ -200,7 +206,7 @@ angular.module('procClinSafeApp').controller('reportWizardController',
             $timeout(function() {
                 $scope.clients = clients;
                 if ($scope.clients.length > 0) {
-                    $scope.report.client = $scope.clients[0];
+                   // $scope.report.client = $scope.clients[0];
                 }
                 // $scope.$apply();
             });

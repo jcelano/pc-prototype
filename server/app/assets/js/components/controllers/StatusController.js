@@ -5,7 +5,7 @@ angular.module('procClinSafeApp').controller('statusController', ['$scope',
         $scope.reports = mockup();
         $scope.currentPage = 1;
         $scope.numPerPage = 7;
-
+        $scope.lastUpdatedOn = new Date();
         $scope.paginate = function(report) {
             let index=0;
             const begin = ($scope.currentPage - 1) * $scope.numPerPage;
