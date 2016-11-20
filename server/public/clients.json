@@ -1,1 +1,62 @@
-[{"id":"CLI1","name":"client #1","drugs":[{"id":"drug1","name":"sadfasdfjk;lkj","studies":[{"id":"STU1","name":"study #1","studies":null,"$$hashKey":"object:94","deliverables":[{"id":"DEL1","name":"Deasdfasdf","date":"2016-11-02T04:00:00.000Z","$$hashKey":"object:45","checked":true},{"id":"DEL2","name":"deliverable 2","date":"2016-11-15T05:00:00.000Z","$$hashKey":"object:46"}]}],"$$hashKey":"object:83"}],"$$hashKey":"object:61"},{"id":"asdf","name":"asdfasdf","drugs":[],"$$hashKey":"object:8"},{"id":"CLI3","name":"client $ 3 ralston purina","drugs":[{"id":"DRU2","name":"the second drug","studies":[{"id":"STU1","name":"another study","studies":null,"$$hashKey":"object:86","deliverables":[{"id":"DEL1","name":"the first deliveable","date":"2016-11-02T04:00:00.000Z"}]}],"$$hashKey":"object:66"}],"$$hashKey":"object:8"}]
+[
+  {
+    "id": "CLI1",
+    "name": "client #1",
+    "drugs": [
+      {
+        "id": "drug1",
+        "name": "the first drug",
+        "studies": [
+          {
+            "id": "STU1",
+            "name": "study #1",
+            "studies": null,
+            "deliverables": [
+              {
+                "id": "DEL1",
+                "name": "the first deliverable",
+                "date": "2016-11-02T04:00:00.000Z",
+                "checked": true
+              },
+              {
+                "id": "DEL2",
+                "name": "deliverable 2",
+                "date": "2016-11-15T05:00:00.000Z"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "CLI2",
+    "name": "Toyota",
+    "drugs": []
+  },
+  {
+    "id": "CLI3",
+    "name": "client $ 3 ralston purina",
+    "drugs": [
+      {
+        "id": "DRU2",
+        "name": "the second drug",
+        "studies": [
+          {
+            "id": "STU1",
+            "name": "another study",
+            "studies": null,
+            "$$hashKey": "object:86",
+            "deliverables": [
+              {
+                "id": "DEL1",
+                "name": "the first deliveable",
+                "date": "2016-11-02T04:00:00.000Z"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

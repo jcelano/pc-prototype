@@ -26,6 +26,9 @@ pscApp.controller("ClientCrudController", ['$uibModalInstance', '$scope', 'Clien
         if($scope.is_new){
             ClientService.addClient($scope.client);
         }
+        else{
+            ClientService.saveState();
+        }
 
         $uibModalInstance.close($scope.client);
     };

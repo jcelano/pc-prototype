@@ -16,11 +16,10 @@ angular.module('clientService', [])
         gets the list of clients in the system
         * */
         var list = function () {
-
-            clients =  FileService.loadClients();
-
-            return clients;
-
+            return FileService.loadClients().then(function(data){
+                clients = data;
+                return clients;
+            });
         };
 
         /*

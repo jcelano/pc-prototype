@@ -59,9 +59,9 @@
                         <!--<li><a type="button" href="#wizard"><span class="glyphicon glyphicon-plus"></span> New Report</a></li>-->
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li ng-class="{ active: isActive('/wizard')}"><a href="#wizard"><i class="fa fa-bar-chart"></i> New Report</a></li>
+                        <li ng-class="{ active: isActive('/wizard') || isActive('/')}"><a href="#wizard"><i class="fa fa-bar-chart"></i> New Report</a></li>
                         <li ng-class="{ active: isActive('/status')}"><a href="#status"><i class="fa fa-dashboard"></i> Status</a></li>
-                        <li ng-class="{ active: isActive('/')}"><a href="#settings"><i class="fa fa-envelope"></i> Contact</a></li>
+                        <li ng-class="{ active: isActive('/contact')}"><a href="mailto:support@prodclindafe.com"><i class="fa fa-envelope"></i> Contact</a></li>
                         <li ng-class="{ active: isActive('/settings')}" class="dropdown">
                             <a href="#settings" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-wrench"></i> Settings <span class="caret"></span></a>
